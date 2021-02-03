@@ -12,6 +12,7 @@
     "stylelint": "^13.9.0",
     "vue": "^2.6.11",
     "vues": "^0.5.20",
+    "vuetify": "^2.4.0",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
@@ -23,7 +24,9 @@
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.32.6",
     "sass-loader": "^10.1.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-cli-plugin-vuetify": "~2.1.0",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.7.0"
   },
   "eslintConfig": {
     "root": true,

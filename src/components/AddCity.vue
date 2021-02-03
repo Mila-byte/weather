@@ -1,9 +1,14 @@
 <template>
-<div id="add">
-  <label for="city">Name</label>
-  <input type="text" v-model="city" id="city">
-  <input type="button" value="+" @click="addCity">
-</div>
+  <v-card
+      tile
+  >
+  <v-text-field label="City" v-model="city" @keyup.enter="addCity"></v-text-field>
+    <v-btn
+        elevation="2"
+        medium
+        @click="addCity"
+    >Search</v-btn>
+  </v-card>
 </template>
 
 <script>
@@ -17,6 +22,7 @@ export default {
   methods: {
     addCity () {
       this.$store.dispatch('addCity', this.city)
+      this.city = ''
     }
   }
 }

@@ -1,10 +1,12 @@
 <template>
   <div id="app">
+    <v-app id="inspire">
     <h1>Weather-app using a Vue.js</h1>
-    <div>
-    <AddCity/>
+    <v-container class="col-sm-10 col-lg-6">
+      <AddCity/>
       <CardOfCity />
-    </div>
+    </v-container>
+    </v-app>
   </div>
 </template>
 
@@ -15,6 +17,11 @@ import CardOfCity from "@/components/CardOfCity";
 export default {
   name: 'App',
   components: {AddCity, CardOfCity},
+  created() {
+    if(localStorage.getItem('cities')){
+      this.$store.dispatch('setCities')
+    }
+  }
 }
 </script>
 
@@ -31,5 +38,5 @@ $brown: #351b1b;
     background: $brown;
     color: $white;
   }
-  }
+}
 </style>
