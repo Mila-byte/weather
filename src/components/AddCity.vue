@@ -11,27 +11,12 @@ export default {
   name: "CardOfWeather",
   data () {
     return {
-      city: '',
-      temp: '0'
+      city: ''
     }
   },
   methods: {
     addCity () {
-      if(this.city) {
-        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&appid=fdc5c7b31d822cd909a6ffa9fab71737`)
-            .then(res => res.json())
-            .then(res => {
-              if (res.cod >= 400 && res.cod < 500) {
-                this.city = res.message
-              } else if (res.cod === 200) {
-                let temperature = res.main.temp
-                this.$emit('addCity', {city: this.city, temp: temperature})
-                this.city = ''
-                this.temp = '0'
-              }
-            })
-      }
-
+      this.$store.dispatch('addCity', this.city)
     }
   }
 }
