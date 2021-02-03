@@ -2,18 +2,47 @@
   <div id="app">
     <h1>Weather-app using a Vue.js</h1>
     <div class="container">
-
-      <CardOfWeather />
+    <AddCity @addCity="addCity"/>
+      <CardOfCity
+          v-for="elCity of arrCity"
+          :key="elCity.id"
+          :nameCity="elCity"
+          @deleteCity="deleteCity"
+      />
     </div>
   </div>
 </template>
 
 <script>
 
-import CardOfWeather from "@/components/CardOfWeather";
+
+import AddCity from "@/components/AddCity";
+import CardOfCity from "@/components/CardOfCity";
 export default {
   name: 'App',
-  components: {CardOfWeather}
+  components: {AddCity, CardOfCity},
+  data() {
+    return {
+      arrCity: [],
+      idCity: 0
+    }
+  },
+  methods: {
+    addCity(info) {
+      this.arrCity.push({
+        id: this.idCity++,
+        city: info.city,
+        temp: info.temp
+      })
+    },
+    deleteCity (id) {
+       for (let i = 0; i < this.arrCity.length; i++) {
+          if (this.arrCity[i].id === id) {
+            this.arrCity.splice(i, 1)
+          }
+       }
+    }
+  }
 }
 </script>
 

@@ -11,6 +11,7 @@
     "core-js": "^3.6.5",
     "stylelint": "^13.9.0",
     "vue": "^2.6.11",
+    "vues": "^0.5.20",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
