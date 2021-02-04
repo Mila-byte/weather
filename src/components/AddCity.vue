@@ -2,25 +2,26 @@
   <v-card
       tile
   >
-  <v-text-field label="City" v-model="city" @keyup.enter="addCity"></v-text-field>
+    <v-text-field label="City" v-model="city" @keyup.enter="addCity"></v-text-field>
     <v-btn
         elevation="2"
         medium
         @click="addCity"
-    >Search</v-btn>
+    >Search
+    </v-btn>
   </v-card>
 </template>
 
 <script>
 export default {
-  name: "CardOfWeather",
-  data () {
+  name: "AddCity",
+  data() {
     return {
       city: ''
     }
   },
   methods: {
-    addCity () {
+    addCity() {
       this.$store.dispatch('addCity', this.city)
       this.city = ''
     }

@@ -19,8 +19,8 @@ export default {
     updateData (state, upCity) {
         for (let i = 0; i < state.arrCity.length; i++) {
             if (upCity.id === state.arrCity[i].id) {
-                state.arrCity[i] = upCity
-                console.log(`updated ${upCity.name}`)
+                state.arrCity.splice(i,1,upCity)
+                localStorage.setItem('cities', JSON.stringify(state.arrCity))
                 break
             }
         }

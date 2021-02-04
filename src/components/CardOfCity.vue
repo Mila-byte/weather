@@ -22,7 +22,7 @@
             text
             @click="deleteCity(index)"
         >
-          Read more
+          Delete
         </v-btn>
         <v-icon color="orange darken-2" @click="updateData(city.name)">
           mdi-backup-restore
@@ -32,16 +32,18 @@
         </v-card-title>
       </v-img>
       <v-card-subtitle>
-        Temp: {{ +city.main.temp.toFixed() }} &#8451;
+        Temp: {{ city.main.temp }} &#8451;
+<!--        Temp: {{ +city.main.temp.toFixed() }} &#8451;-->
       </v-card-subtitle>
 
       <v-card-actions>
-        <v-btn
+        <router-link :to="`/info/${city.id}-${city.name.toLowerCase()}`"> <v-btn
             color="orange lighten-2"
             text
         >
-          Read more
-        </v-btn>
+          Read more Information
+        </v-btn></router-link>
+
 
         <v-spacer></v-spacer>
 
@@ -58,7 +60,8 @@
           <v-divider></v-divider>
 
           <v-card-text>
-            <p>Temp: {{ +city.main.temp.toFixed() }} &#8451;</p>
+            <p>Temp: {{ city.main.temp }} &#8451;</p>
+<!--            <p>Temp: {{ +city.main.temp.toFixed() }} &#8451;</p>-->
             <p>Name: {{ city.name }}</p>
           </v-card-text>
         </div>
@@ -69,24 +72,25 @@
 
 <script>
 import {mapGetters} from 'vuex'
+
 export default {
-  name: "AddOfCity",
-  computed:{
+  name: "CardOfCity",
+  computed: {
     ...mapGetters(['getDataOfCity'])
   },
-  data () {
+  data() {
     return {
       idActiveBlock: false
     }
   },
   methods: {
-    deleteCity (index) {
+    deleteCity(index) {
       this.$store.dispatch('deleteCity', index)
     },
-    showMoreInfo (id) {
+    showMoreInfo(id) {
       this.idActiveBlock !== id ? this.idActiveBlock = id : this.idActiveBlock = false
     },
-    updateData (upCity) {
+    updateData(upCity) {
       this.$store.dispatch('updateData', upCity)
     }
   }
