@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app id="inspire">
-      <h1>Weather-app using a Vue.js</h1>
+      <h1>Weather app</h1>
       <v-container class="col-sm-10 col-lg-6">
         <router-view></router-view>
       </v-container>
@@ -35,6 +35,8 @@ $brown: #351b1b;
     padding: 30px 0;
     background: $brown;
     color: $white;
+    text-transform: uppercase;
+    font-family: "Bookman Old Style", sans-serif;
   }
 }
 </style>

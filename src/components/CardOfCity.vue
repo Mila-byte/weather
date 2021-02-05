@@ -5,44 +5,38 @@
         max-width="344"
         v-for="(city, index) of getDataOfCity" :key="city.id"
     >
-
-      <v-img
-          src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-          height="200px"
-      >
-        <v-list-item-avatar color="grey darken-3">
+        <v-list-item-avatar class="brown lighten-3">
           <v-img
               class="elevation-6"
               alt=""
               :src="`http://www.openweathermap.org/img/wn/${city.weather[0].icon}@2x.png`"
           ></v-img>
         </v-list-item-avatar>
-        <v-btn
-            color="orange lighten-2"
-            text
-            @click="deleteCity(index)"
-        >
-          Delete
-        </v-btn>
-        <v-icon color="orange darken-2" @click="updateData(city.name)">
+
+        <v-icon color="green darken-1" @click="updateData(city.name)">
           mdi-backup-restore
         </v-icon>
+      <v-btn class="del"
+          color="red darken-4"
+          text
+          @click="deleteCity(index)"
+      >
+        X
+      </v-btn>
         <v-card-title>
           {{ city.name }}
         </v-card-title>
-      </v-img>
       <v-card-subtitle>
-        Temp: {{ city.main.temp }} &#8451;
-<!--        Temp: {{ +city.main.temp.toFixed() }} &#8451;-->
+        <p class="description"> {{ city.weather[0].description }} </p>
       </v-card-subtitle>
-
+      <v-card-text>
+        <p>Temperature: {{ +city.main.temp.toFixed() }} &#8451;</p>
+        <p>Feels like: {{ +city.main.feels_like.toFixed() }} &#8451;</p>
+      </v-card-text>
       <v-card-actions>
         <router-link :to="`/info/${city.id}-${city.name.toLowerCase()}`"> <v-btn
-            color="orange lighten-2"
-            text
-        >
-          Read more Information
-        </v-btn></router-link>
+            elevation="2"
+        >Read More</v-btn></router-link>
 
 
         <v-spacer></v-spacer>
@@ -60,9 +54,10 @@
           <v-divider></v-divider>
 
           <v-card-text>
-            <p>Temp: {{ city.main.temp }} &#8451;</p>
-<!--            <p>Temp: {{ +city.main.temp.toFixed() }} &#8451;</p>-->
-            <p>Name: {{ city.name }}</p>
+            <p>MIN Temperature: {{ +city.main.temp_min.toFixed() }} &#8451;</p>
+            <p>MAX Temperature: {{ +city.main.temp_max.toFixed() }} &#8451;</p>
+            <p>Pressure: {{ city.main.pressure }} hPa</p>
+            <p>Humidity: {{ city.main.humidity }} %</p>
           </v-card-text>
         </div>
       </v-expand-transition>
@@ -98,4 +93,30 @@ export default {
 </script>
 
 <style scoped lang="scss">
+#card {
+ .v-card {
+   margin: 30px 0;
+   position: relative;
+    .del {
+       position: absolute;
+       right: 0;
+      top: 0;
+      font-size: 20px;
+      font-weight: 800;
+}
+   .v-card__title {
+     font-size: 26px;
+     font-weight: 600;
+   }
+   .v-card__subtitle{
+     font-size: 16px;
+   }
+   .v-card__text{
+    font-size: 16px;
+   }
+    a {
+  text-decoration: none;
+  }
+ }
+}
 </style>
