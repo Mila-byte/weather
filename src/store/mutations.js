@@ -24,5 +24,16 @@ export default {
                 break
             }
         }
+    },
+    setMyCity (state, data) {
+        for (let i = 0; i < state.arrCity.length; i++) {
+            if (data.id === state.arrCity[i].id) {
+                state.arrCity.splice(i,1, data)
+                console.log('updated my location')
+                localStorage.setItem('cities', JSON.stringify(state.arrCity))
+                return
+            }
+        }
+        state.arrCity.push(data)
     }
 }

@@ -6,10 +6,10 @@ import MainPage from "@/components/MainPage";
 Vue.use(VueRouter)
 
 const routes = [
-    { path: '/info/:name', component: FullInfo},
-    { path: '/', component: MainPage}
+    {path: '/info/:name', component: FullInfo},
+    {path: '/', component: MainPage}
 ]
 
-export default new VueRouter ({
+export default new VueRouter({
     routes
 })

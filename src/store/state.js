@@ -1,3 +1,4 @@
 export default {
-    arrCity: []
+    arrCity: [],
+    myCity: null
 }

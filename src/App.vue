@@ -14,22 +14,29 @@
 
 export default {
   name: 'App',
+
   created() {
     if (localStorage.getItem('cities')) {
       this.$store.dispatch('setCities')
-      this.getGeolocation()
     }
+    this.getGeolocation()
   },
   methods: {
+    getGeolocation() {
+      this.$getLocation()
+        .then(coord => {
+          this.$store.dispatch('setMyCity' , coord)
+          }).catch(() => {
+          alert('geolocation disabled')
+      })
+    }
   }
 }
 </script>
 
 <style lang="scss">
 @import "assets/reset.css";
-
-$white: #fff;
-$brown: #351b1b;
+@import "assets/colors.scss";
 #app {
   h1 {
     text-align: center;
