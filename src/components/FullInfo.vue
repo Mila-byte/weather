@@ -37,8 +37,18 @@
         </v-col>
       </v-row>
     </v-card-text>
-<!--    <VueApexCharts width="500" height="150" type="bar" :options="chartOptions" :series="series"></VueApexCharts>-->
-    <VueApexCharts width="60%" type="line" :options="chartOptions" :series="series" class="chart"></VueApexCharts>
+    <div class="chart">
+      <ul class="graph" v-if="hourlyTemp.length">
+        <li v-for="(el, index) of hourlyTemp" :key="index">
+          <img class="graph-icon" :src="`http://www.openweathermap.org/img/wn/${el.icon}@2x.png`"/>
+          <div class="temp" :style="`background-color: ${el.color}`">
+            {{el.temp}}
+          </div>
+          <div class="padding" :style="`padding-top: ${el.padding*5}px`"></div>
+          <div class="time"><span :class="{today: el.day === 'today'}">{{el.hours}}</span></div>
+        </li>
+      </ul>
+    </div>
     <v-card-text>
       <p><b>Wind Speed:</b> {{ wind }} km/h</p>
       <p><b>Min/Max temperature:</b> {{ minTemp }}/{{ maxTemp }} &#8451;</p>
@@ -51,7 +61,6 @@
 
 <script>
 import {mapState} from 'vuex'
-import VueApexCharts from 'vue-apexcharts'
 
 export default {
   name: "FullInfo",
@@ -70,76 +79,9 @@ export default {
       humidity: 0,
       lat: 0,
       lon: 0,
-      series: [
-        {
-          name: "High - 2013",
-          data: []
-        },
-      ],
-      chartOptions: {
-        chart: {
-          animations: {
-            enabled: false
-          },
-          height: 350,
-          type: 'line',
-          dropShadow: {
-            enabled: true,
-            color: '#000',
-            top: 18,
-            left: 7,
-            blur: 10,
-            opacity: 0.2
-          },
-          toolbar: {
-            show: false
-          },
-          zoom: {
-            enabled:false
-          }
-        },
-        colors: ['transparent'],
-        dataLabels: {
-          enabled: true,
-          style: {
-            colors: ['blue']
-          }
-          ,
-          background: {
-            // foreColor: 'blue',
-            padding: 10
-          }
-        },
-tooltip: {
-  enabled: false
-},
-        title: {
-          text: 'Hourly Temperature',
-          align: 'center'
-        },
-        markers: {
-          size: 0
-        },
-        grid: {
-          show: false
-        },
-        xaxis: {
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-        },
-        yaxis: {
-          labels: {
-            show: false
-          },
-          min: -50,
-          max: 50
-        },
-        legend: {
-          show: false
-        }
-      },
+      hourlyTemp: []
     }
   },
-  components: {VueApexCharts},
   computed: {
     imageSrc() {
       if(this.icon) {
@@ -182,85 +124,53 @@ tooltip: {
       }
     },
    async  getHourlyTemp () {
-      let data = []
-      let hours = []
-      await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.lat}&lon=${this.lon}&units=metric&appid=fdc5c7b31d822cd909a6ffa9fab71737`)
+     let data = []
+     let hours = []
+     let icons = []
+     let date = []
+      await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.lat}&lon=${this.lon}&exclude=current,minutely,daily,alerts&units=metric&appid=fdc5c7b31d822cd909a6ffa9fab71737`)
           .then(res=>res.json())
           .then(res=> {
-            console.log(res)
-            for (let i = 0; i < 27; i+=3) {
-              data.push(res.hourly[i].temp)
-
-              hours.push(new Date((res.hourly[i].dt)*1000).toLocaleTimeString().substring(0,5))
+            for (let i = 0; i < 24; i += 3) {
+              //получение значений температуры
+              data.push(+res.hourly[i].temp.toFixed())
+              //получение кода иконки
+              icons.push(res.hourly[i].weather[0].icon)
+              //получение времени суток в часах
+              hours.push(new Date((res.hourly[i].dt) * 1000).toLocaleTimeString().substring(0, 5))
+              //получение дня
+              date.push(new Date((res.hourly[i].dt) * 1000).toLocaleDateString().substring(0, 2))
             }
-            this.series = [
-              {
-                name: "High - 2013",
-                data: data
-              }
-            ]
-            this.chartOptions =  {
-              chart: {
-                animations: {
-                  enabled: false
-                },
-                height: 150,
-                type: 'line',
-                dropShadow: {
-                  enabled: true,
-                  color: '#000',
-                  top: 18,
-                  left: 7,
-                  blur: 10,
-                  opacity: 0.2
-                },
-                toolbar: {
-                  show: false
-                },
-                zoom: {
-                  enabled:false
-                }
-              },
-              colors: ['transparent'],
-              dataLabels: {
-                enabled: true,
-                style: {
-                  colors: ['blue']
-                }
-                ,
-                background: {
-                  // foreColor: 'blue',
-                  padding: 5
-                }
-              },
-              tooltip: {
-                enabled: false
-              },
-              title: {
-                text: 'Hourly Temperature',
-                align: 'center'
-              },
-              markers: {
-                size: 0
-              },
-              grid: {
-                show: false
-              },
-              xaxis: {
-                categories: hours},
-              yaxis: {
-                labels: {
-                  show: false
-                },
-                min: -50,
-                max: 50
-              },
-              legend: {
-                show: false
-              }
-            }
-            console.log(this.series[0].data)
           })
+     //расчет padding
+     let minTemp = Math.min(...data)
+     let paddings = data.map(el=>{
+       if(el === minTemp) {
+         return 0
+       } else if (el > 0) {
+         return (el - minTemp)
+       } else {
+         return (Math.abs(minTemp) - Math.abs(el))
+       }
+     })
+
+     //получение текущего числа дня
+     let today = new Date().toLocaleDateString().substring(0,2)
+
+     //формирование данных о погоде почасово
+     let hourlyData = []
+     for (let i = 0; i < 8; i++) {
+       hourlyData.push({
+         temp: data[i],
+         padding: paddings[i],
+         hours: hours[i],
+         icon: icons[i],
+         color: data[i] > 0? '#e7a45c' : data[i] !== 0 ? ' #9dcddb' : '#cae2e8',
+         day: date[i] === today ? 'today' : 'tomorrow'
+       })
+     }
+
+     this.hourlyTemp = hourlyData
     }
   },
 }
@@ -274,16 +184,41 @@ tooltip: {
   .v-sheet {
     margin: 15px;
   }
-  .chart {
-    display: flex;
-    justify-content: center;
-    div {
-      overflow: visible;
-      svg {
-        &#SvgjsSvg1001{
-          overflow: visible!important;
+  .chart{
+    border: 1px solid black;
+    width: 100%;
+    padding: 5px;
+    background: #ac867390;
+    ul{
+      display: flex;
+      align-items: flex-end;
+      li {
+        margin: 0 1px;
+        .graph-icon {
+          width: 80%;
+          align-self: center;
         }
-
+        .temp {
+          border-bottom: 1px solid #0000ff90;
+          text-align: center;
+        }
+        .padding {
+          margin-bottom: 10px;
+        }
+        .time{
+          text-align: center;
+          color: #fff;
+          span {
+            background: #80808090;
+            padding: 3px 10px;
+            border-radius: 10px;
+            &.today {
+              background: #ac8673;
+              padding: 3px 10px;
+              border-radius: 10px;
+            }
+          }
+        }
       }
     }
   }

@@ -17,7 +17,10 @@ export default {
   created() {
     if (localStorage.getItem('cities')) {
       this.$store.dispatch('setCities')
+      this.getGeolocation()
     }
+  },
+  methods: {
   }
 }
 </script>
