@@ -1,6 +1,6 @@
 export default {
     addCity({commit}, city) {
-        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=fdc5c7b31d822cd909a6ffa9fab71737`)
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=fdc5c7b31d822cd909a6ffa9fab71737`)
             .then(res => res.json())
             .then(res => {
                 if (res.cod >= 400 && res.cod < 500) {
@@ -18,7 +18,7 @@ export default {
         let cities = JSON.parse(localStorage.getItem('cities'))
 
         for (let i = 0; i < cities.length; i++) {
-            await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cities[i].name}&units=metric&appid=fdc5c7b31d822cd909a6ffa9fab71737`)
+            await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cities[i].name}&units=metric&appid=fdc5c7b31d822cd909a6ffa9fab71737`)
                 .then(res => res.json())
                 .then(res => {
                     cities[i] = res
@@ -27,7 +27,7 @@ export default {
         commit('setCities', cities)
     },
     async updateData({commit}, city) {
-        await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=fdc5c7b31d822cd909a6ffa9fab71737`)
+        await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=fdc5c7b31d822cd909a6ffa9fab71737`)
             .then(res => res.json())
             .then(res => {
                 commit('updateData', res)

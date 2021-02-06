@@ -41,7 +41,7 @@
       <div class="chart">
         <ul class="graph" v-if="hourlyTemp.length">
           <li v-for="(el, index) of hourlyTemp" :key="index">
-            <img class="graph-icon" :src="`http://www.openweathermap.org/img/wn/${el.icon}@2x.png`" alt="iconWeather"/>
+            <img class="graph-icon" :src="`https://www.openweathermap.org/img/wn/${el.icon}@2x.png`" alt="iconWeather"/>
             <div class="temp" :style="`background-color: ${el.color}`">
               {{ el.temp }}
             </div>
@@ -83,7 +83,7 @@ export default {
   computed: {
     imageSrc() {
       if (this.icon) {
-        return `http://www.openweathermap.org/img/wn/${this.icon}@2x.png`
+        return `https://www.openweathermap.org/img/wn/${this.icon}@2x.png`
       } else return ''
     },
     ...mapState(['arrCity'])
@@ -185,7 +185,7 @@ export default {
     width: 100%;
     padding: 5px;
     background: $brown-coffee;
-
+    overflow: auto;
     ul {
       display: flex;
       align-items: flex-end;

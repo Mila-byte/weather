@@ -9,7 +9,7 @@
         <v-img
             class="elevation-6"
             alt=""
-            :src="`http://www.openweathermap.org/img/wn/${city.weather[0].icon}@2x.png`"
+            :src="`https://www.openweathermap.org/img/wn/${city.weather[0].icon}@2x.png`"
         ></v-img>
       </v-list-item-avatar>
 
