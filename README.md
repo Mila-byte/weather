@@ -23,7 +23,6 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 ### Description 
-```
 This is a SPA that shows the weather depending on the selected city. 
 At the first start, a card of weather is displayed depending on the current geolocation.
 You have the ability to add/delete other cities.
@@ -32,4 +31,3 @@ Also in "READ MORE" you can see the hourly temperature.
 The following technologies were used in the project: Vue.js, Vuex, Vue-router, Vuetify, localStorage, SCSS, geolocation.
 Weather API: http://openweathermap.org/
 You can see the project at the link https://mila-byte.github.io/weather-app/
-```
