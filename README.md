@@ -31,4 +31,5 @@ Added cities are stored in localStorage.
 Also in "READ MORE" you can see the hourly temperature.
 The following technologies were used in the project: Vue.js, Vuex, Vue-router, Vuetify, localStorage, SCSS, geolocation.
 Weather API: http://openweathermap.org/
+You can see the project at the link https://mila-byte.github.io/weather-app/
 ```
