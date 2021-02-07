@@ -26,7 +26,7 @@
               class="display-3"
               cols="6"
           >
-            {{ temp }}&deg;C
+            {{ +temp.toFixed() }}&deg;C
           </v-col>
           <v-col
               cols="3"
@@ -128,10 +128,11 @@ export default {
       await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.lat}&lon=${this.lon}&exclude=current,minutely,daily,alerts&units=metric&appid=fdc5c7b31d822cd909a6ffa9fab71737`)
           .then(res => res.json())
           .then(res => {
+            console.log(res.hourly)
             for (let i = 0; i < 24; i += 3) {
               data.push(+res.hourly[i].temp.toFixed())
               icons.push(res.hourly[i].weather[0].icon)
-              hours.push(new Date((res.hourly[i].dt) * 1000).toLocaleTimeString().substring(0, 5))
+              hours.push(`${new Date(res.hourly[i].dt * 1000).getHours()}:00`)
               date.push(new Date((res.hourly[i].dt) * 1000).toLocaleDateString().substring(0, 2))
             }
           }).catch(err => console.log(err))
