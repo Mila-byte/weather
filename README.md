@@ -24,8 +24,8 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 ### Description 
 ```
-This is a SPA that shows the weather depending on the seselect city. 
-At the first start, a card is displayed depending on the current geolocation.
+This is a SPA that shows the weather depending on the selected city. 
+At the first start, a card of weather is displayed depending on the current geolocation.
 You have the ability to add/delete other cities.
 Added cities are stored in localStorage.
 Also in "READ MORE" you can see the hourly temperature.
